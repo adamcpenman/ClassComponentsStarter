@@ -5,7 +5,7 @@ export default [
     purchased: false
   },
   {
-    name: "Torillas",
+    name: "Tortillas",
     id: 124,
     purchased: false
   },

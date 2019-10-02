@@ -14,6 +14,7 @@ class App extends React.Component {
   }
 
   toggleItem = (event, itemId) => {
+    event.preventDefault();
     this.setState({
       groceries: this.state.groceries.map(item => {
         if (item.id === itemId) {
@@ -28,12 +29,34 @@ class App extends React.Component {
     });
   };
 
+  clearPurchased = event => {
+    event.preventDefault();
+    this.setState({
+      //filter out all groceries that are purchased
+      groceries: this.state.groceries.filter(item => {
+        return !item.purchased; //return false ===false
+      })
+    });
+  };
+
+  addItem = (event, itemName) => {
+    const newItem = {
+      id: Date.now(),
+      name: itemName,
+      purchased: false
+    };
+
+    this.setState({
+      groceries: [...this.state.groceries, newItem]
+    });
+  };
+
   render() {
     return (
       <div className="App">
         <div className="header">
           <h1>Shopping List</h1>
-          <ItemForm />
+          <ItemForm addItem={this.addItem} />
         </div>
 
         <div className="shopping-list">
@@ -45,7 +68,9 @@ class App extends React.Component {
             />
           ))}
 
-          <button className="clear-btn">Clear Purchased</button>
+          <button className="clear-btn" onClick={this.clearPurchased}>
+            Clear Purchased
+          </button>
         </div>
       </div>
     );
