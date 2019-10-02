@@ -1,2 +1,0 @@
-# ClassComponentsStarter
-Created with CodeSandbox
