@@ -6,6 +6,28 @@ import ItemForm from "./components/ItemForm";
 import data from "./data";
 
 class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      groceries: data
+    };
+  }
+
+  toggleItem = (event, itemId) => {
+    this.setState({
+      groceries: this.state.groceries.map(item => {
+        if (item.id === itemId) {
+          return {
+            ...item,
+            purchased: !item.purchased
+          };
+        } else {
+          return item;
+        }
+      })
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -15,8 +37,12 @@ class App extends React.Component {
         </div>
 
         <div className="shopping-list">
-          {data.map(item => (
-            <Item key={item.id} item={item} />
+          {this.state.groceries.map(item => (
+            <Item
+              key={item.id}
+              item={item}
+              onClick={e => this.toggleItem(e, item.id)}
+            />
           ))}
 
           <button className="clear-btn">Clear Purchased</button>
